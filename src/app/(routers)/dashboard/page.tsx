@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { LogoutLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useConvex, useMutation } from "convex/react";
 import React, { useEffect } from "react";
 import { api } from "@/convex/_generated/api";
@@ -22,12 +22,10 @@ function Dashboard() {
     });
     if (user) {
       if (!result?.length) {
-        createUser({
+        await createUser({
           email: user.email || "",
           name: user.given_name || "",
           image: user.picture || ""
-        }).then((resp) => {
-          console.log(resp);
         });
       }
     }

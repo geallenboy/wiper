@@ -1,6 +1,6 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
-import { ChevronDown, LayoutGrid, LogOut, Settings, Users } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { LayoutGrid, LogOut, Settings, Users } from "lucide-react";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useFileStore } from "@/store/useStore";
 export interface TeamProps {
   createdBy: String;
   teamName: String;
@@ -22,6 +23,8 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
   const convex = useConvex();
   const [activeTeam, setActiveTeam] = useState<TeamProps>();
   const [teamList, setTeamList] = useState<TeamProps[]>();
+
+  const setTeamId = useFileStore((state) => state.setTeamId);
   const menu = [
     {
       id: 1,
@@ -51,10 +54,22 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
   }, [activeTeam]);
 
   const getTeamList = async () => {
-    const result = await convex.query(api.teams.getTeam, { email: user?.email });
-    console.log("teamList", result);
-    setTeamList(result);
-    setActiveTeam(result[0]);
+    try {
+      const result = await convex.query(api.teams.getTeam, { email: user?.email });
+      if (result.success) {
+        setTeamList(result.data);
+        setActiveTeam(result.data[0]);
+        setTeamId(result.data[0]?._id || "");
+      } else {
+        setTeamList([]);
+        setActiveTeam({ createdBy: "", teamName: "", _id: "" });
+        setTeamId("");
+      }
+    } catch (error) {
+      setTeamList([]);
+      setActiveTeam({ createdBy: "", teamName: "", _id: "" });
+      setTeamId("");
+    }
   };
   const onMenuClick = (item: any) => {
     if (item.path) {

@@ -1,5 +1,5 @@
 import { MAX_FREE_FILE } from "@/_constant/Constant";
-import { Archive, Flag, Github } from "lucide-react";
+import { Github } from "lucide-react";
 import React, { useState } from "react";
 import {
   Dialog,
@@ -15,26 +15,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import PricingDialog from "./PricingDialog";
 
-function SideNavBottomSection({ onFileCreate, totalFiles }: any) {
+function SideNavBottomSection({
+  onFileCreate,
+  totalFiles
+}: {
+  onFileCreate: any;
+  totalFiles: number;
+}) {
   const menuList = [
-    // {
-    //   id: 1,
-    //   name: "开始",
-    //   icon: Flag,
-    //   path: ""
-    // },
     {
       id: 2,
       name: "Github",
       icon: Github,
       path: "https://github.com/geallenboy/wiper"
     }
-    // {
-    //   id: 3,
-    //   name: "档案",
-    //   icon: Archive,
-    //   path: ""
-    // }
   ];
 
   const [fileInput, setFileInput] = useState("");

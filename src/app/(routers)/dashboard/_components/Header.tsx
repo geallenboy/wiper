@@ -8,7 +8,7 @@ function Header() {
   return (
     <div className="flex justify-end w-full gap-2 items-center">
       <div className="flex gap-2 items-center  rounded-md p-1">
-        <Input type="text" placeholder="Search" />
+        <Input type="text" placeholder="搜索" />
         <Search className="h-4 w-4 " />
       </div>
       <div>

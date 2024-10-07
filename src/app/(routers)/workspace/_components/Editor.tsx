@@ -31,33 +31,30 @@ function Editor({
   }, [fileData]);
   useEffect(() => {
     console.log("triiger Value:", onSaveTrigger);
-    onSaveTrigger && onSaveDocument();
+    onSaveDocument();
   }, [onSaveTrigger]);
-  const onSaveDocument = () => {
+  const onSaveDocument = async () => {
     if (ref.current) {
-      ref.current
-        .save()
-        .then((outputData) => {
-          console.log("Article data: ", outputData);
-          updateDocument({
-            _id: fileId,
-            document: JSON.stringify(outputData)
-          }).then(
-            (resp) => {
-              toast({
-                description: "文档更新成功!"
-              });
-            },
-            (e) => {
-              toast({
-                description: "文档更新失败!"
-              });
-            }
-          );
-        })
-        .catch((error) => {
-          console.log("Saving failed: ", error);
+      try {
+        const outputData = await ref.current.save();
+        const resp = await updateDocument({
+          _id: fileId,
+          document: JSON.stringify(outputData)
         });
+        if (resp.success) {
+          toast({
+            description: "文档更新成功!"
+          });
+        } else {
+          toast({
+            description: "文档更新失败!"
+          });
+        }
+      } catch (error) {
+        toast({
+          description: "文档更新失败!"
+        });
+      }
     }
   };
 

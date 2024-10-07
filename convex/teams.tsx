@@ -6,18 +6,26 @@ export const getTeam = query({
     email: v.string()
   },
   handler: async (ctx, args) => {
-    const result = await ctx.db
-      .query("teams")
-      .filter((q) => q.eq(q.field("createdBy"), args.email))
-      .collect();
-    return result;
+    try {
+      const result = await ctx.db
+        .query("teams")
+        .filter((q) => q.eq(q.field("createdBy"), args.email))
+        .collect();
+      return { success: true, data: result };
+    } catch (error) {
+      return { success: true, data: [] };
+    }
   }
 });
 
 export const createTeam = mutation({
   args: { teamName: v.string(), createdBy: v.string() },
   handler: async (ctx, args) => {
-    const result = await ctx.db.insert("teams", args);
-    return result;
+    try {
+      await ctx.db.insert("teams", args);
+      return { success: true };
+    } catch (error) {
+      return { success: false };
+    }
   }
 });
