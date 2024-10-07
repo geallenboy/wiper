@@ -8,7 +8,7 @@ function Hero() {
         <div className="mx-auto max-w-xl text-center">
           <h1 className="text-3xl font-extrabold sm:text-5xl">
             工程团队协作工具
-            <strong className="font-extrabold text-red-700 sm:block mt-3"> 文档和图表</strong>
+            <strong className="font-extrabold text-red-700 sm:block mt-3"> 文档和画板</strong>
           </h1>
           <p className="mt-4 sm:text-xl/relaxed">
             一体化 Markdown 编辑器、协作画布和图表即代码构建器

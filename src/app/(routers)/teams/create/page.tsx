@@ -35,8 +35,8 @@ function CreateTeams() {
   return (
     <div className="px-6 md:px-16 my16">
       <div className="flex items-center">
-        <Image src="/logo.svg" alt="logo" width={100} height={100} />
-        <h1 className="text-[40px] text-black font-sans font-bold">wiper</h1>
+        <Image src="/logo.svg" alt="logo" width={80} height={80} />
+        <h1 className="text-[30px] text-black font-sans font-bold">wiper</h1>
       </div>
       <div className="flex flex-col items-center mt-8">
         <h2 className="font-bold text-[40px] py-3">我们该如何称呼你的团队？</h2>
